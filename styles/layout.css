@@ -1,0 +1,43 @@
+
+body {
+	background-color: lightblue;
+}
+
+
+ul {
+	list-style-type: none;
+}
+
+li {
+	margin: 0px 0px 10px 0px;
+}
+
+
+li input[type="text"]{
+	background: white;
+	padding: 3px;
+}
+
+li input[type="checkbox"]{
+	padding: 3px;
+}
+
+li.edit input[type="text"] {
+	display: initial;
+}
+
+li.edit span {
+	display: none;
+}
+
+input[type="text"].empty {
+	display: inline-flex;
+}
+
+input[type="text"].filled {
+	display: none;
+}
+
+li span.completed {
+	text-decoration: line-through;
+}
