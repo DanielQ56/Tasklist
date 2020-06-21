@@ -1,3 +1,6 @@
+h1, h2{
+	text-align: center;
+}
 
 body {
 	background-color: lightblue;
@@ -6,24 +9,29 @@ body {
 
 ul {
 	list-style-type: none;
+	display: table;
+	margin: 0px auto;
+	text-align: left;
+	padding: 0;
 }
 
 li {
-	margin: 0px 0px 10px 0px;
+	margin: 0px;
+	padding: 5px 5px 5px 0px;
 }
-
 
 li input[type="text"]{
 	background: white;
-	padding: 3px;
+	padding: 0px;
 }
 
 li input[type="checkbox"]{
-	padding: 3px;
+
 }
 
 li.edit input[type="text"] {
 	display: initial;
+	margin: 1px auto;
 }
 
 li.edit span {

@@ -29,14 +29,22 @@ for(var i = 0; i < cb.length; ++i)
 	spans[i].addEventListener("click", EditItemFromSpan);
 	textInputs[i].addEventListener("click", EditItem);
 	textInputs[i].addEventListener("blur", UpdateTextInput);
-	textInputs[i].addEventListener("keypress", InputKeyPress);
+	textInputs[i].addEventListener("keydown", InputKeyPress);
 }
 
 
 
 
 
-
+/* 
+Todo: 
+	get input width to increase with text/decrease with text
+	clear all button 
+	do smth when all tasks are completed
+	start with only one empty task
+	button to add another empty task 
+	button to delete a task 
+*/
 
 
 
@@ -47,7 +55,22 @@ for(var i = 0; i < cb.length; ++i)
 function UpdateTime()
 {
 	var d = new Date();
-	time.innerHTML = (d.getHours() > 12 ? d.getHours() - 12 : d.getHours()) + ":" + String(d.getMinutes()).padStart(2, '0') + ":" + String(d.getSeconds()).padStart(2, '0') + " " + (d.getHours() > 12 ? "PM" : "AM");
+	var hours = d.getHours();
+	var midday;
+	if(hours >= 12)
+	{
+		midday = "PM";
+	}
+	else
+	{
+		if(hours === 0)
+		{
+			hours = 12;
+		}
+		midday = "AM";
+	}
+
+	time.innerHTML = hours + ":" + String(d.getMinutes()).padStart(2, '0') + ":" + String(d.getSeconds()).padStart(2, '0') + " " + midday;
 }
 
 function CrossOffTask()
@@ -77,6 +100,8 @@ function EditItemFromSpan()
 
 function UpdateTextInput()
 {
+	this.value = this.value.trim();
+
 	this.previousElementSibling.innerHTML = this.value;
 
 	if(this.value.length > 0)
