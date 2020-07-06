@@ -1,5 +1,16 @@
-h1, h2{
+h1{
 	text-align: center;
+	font-size: 50px;
+	font-family: Ariel;
+	margin-bottom: 10px;
+}
+
+h2{
+	text-align: center;
+	font-size: 34px;
+	font-family: Garamond;
+	margin-top: 27px;
+	margin-bottom: 8px;
 }
 
 body {
@@ -21,10 +32,12 @@ li {
 }
 
 li.selected {
-	border: 2px solid black;
 	background-color: #FFDAB9;
 }
 
+#time {
+	font-size: 30px;
+}
 
 #fakespan {
 	visibility: hidden;
@@ -33,6 +46,7 @@ li.selected {
 	display: inline-block;
 	position: fixed;
 	overflow: auto;
+	font: 24px Garamond;
 }
 
 .container {
@@ -69,21 +83,28 @@ li.selected input[type="button"].delete, li.selected input[type="button"].comple
 
 input[type="text"]{
 	border: 0;
-	background: #FFDAB9;
+	background: lightblue;
 	display: inline-block;
 	margin: 3px 5px 3px 0px;
-	border: 2px solid black;
+	border-bottom: 2px solid black;
 	padding: 5px 10px;
 	width: 100px;
 	outline: none;
 	color: black;
-	border-radius: 10px;
+	font: 24px Garamond;
 	transition: 0.1s;
 }
 
 
 li.edit input[type="text"] {
 	display: initial;
+	border-bottom: none;
+}
+
+span {
+	font: 24px Garamond;
+	margin: 6px 0px 6px 0px;
+	padding: 10px 0px;
 }
 
 li.edit span {
@@ -96,6 +117,7 @@ input[type="text"].empty {
 
 input[type="text"].filled {
 	display: none;
+	border-bottom: none;
 }
 
 li span.completed {
