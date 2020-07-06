@@ -2,10 +2,22 @@
 
 var checklist = document.getElementById("checklist");
 
+var title = document.getElementById("header");
+
 var date = document.getElementById("date");
 var time = document.getElementById("time");
 
 var fs = document.getElementById("fakespan");
+
+var nameinput = document.querySelector("input[type='text'].name");
+var namespan = document.querySelector("span.name");
+
+nameinput.addEventListener("click", EditItem);
+nameinput.addEventListener("blur", SaveTextInput);
+
+namespan.addEventListener("click", EditItemFromSpan);
+
+RetrieveStoredName();
 
 
 window.addEventListener("beforeunload", SaveTasklist);
@@ -26,6 +38,19 @@ setInterval(UpdateTime, 500)
 //Below are all functions
 
 
+function RetrieveStoredName()
+{
+	if(storage.getItem("name") !== null)
+	{
+		var name = storage.getItem("name").trim();
+		if(name.length > 0)
+		{
+			nameinput.value = name;
+			SaveTextInput.call(nameinput);	
+		}
+	}
+}
+
 
 
 function UpdateTime()
@@ -37,6 +62,11 @@ function UpdateTime()
 	{
 		midday = "PM";
 		hours = hours === 12 ? hours : hours % 12;
+
+		if(hours > 5)
+			header.innerText = "Good Evening ";
+		else
+			header.innerText = "Good Afternoon ";
 	}
 	else
 	{
@@ -45,6 +75,7 @@ function UpdateTime()
 			hours = 12;
 		}
 		midday = "AM";
+		header.innerText = "Good Morning ";
 	}
 
 	time.innerText = hours + ":" + String(d.getMinutes()).padStart(2, '0') + ":" + String(d.getSeconds()).padStart(2, '0') + " " + midday;
@@ -112,26 +143,11 @@ function SaveTasklist()
 		taskArray.push(taskString);
 	}
 
+	storage.setItem("name", nameinput.value.trim());
+
 	storage.setItem("tasks", JSON.stringify(taskArray));
 
 }
 
-function UpdateInputSize()
-{
-	this.style.width = Math.max(100, fs.clientWidth) + "px";
-}
-
-function InputKeyPress(event)
-{
-	if(event.which === 13)
-	{
-		SaveTextInput.call(this);
-	}
-	else if(event.keyCode === 8)
-	{
-		UpdateInputSize.call(this);
-	}
-
-}
 
 

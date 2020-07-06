@@ -1,8 +1,11 @@
 h1{
+	display: inline;
 	text-align: center;
 	font-size: 50px;
 	font-family: Ariel;
-	margin-bottom: 10px;
+	width: 50%;
+	margin: auto
+	border: none;
 }
 
 h2{
@@ -35,6 +38,17 @@ li.selected {
 	background-color: #FFDAB9;
 }
 
+input[type="text"].name{
+	font: bolder 3em Ariel;
+	width: 200px;
+	color: black;
+}
+
+span.name {
+	font: bolder 3em Ariel;
+	color: black;
+}
+
 #time {
 	font-size: 30px;
 }
@@ -51,7 +65,6 @@ li.selected {
 
 .container {
 	text-align: center;
-	width: 50%;
 	margin: auto;
 	padding: 8px 0px;
 }
@@ -96,9 +109,9 @@ input[type="text"]{
 }
 
 
-li.edit input[type="text"] {
+li.edit input[type="text"], div.edit input[type="text"] {
 	display: initial;
-	border-bottom: none;
+	border-bottom: 2px solid black;
 }
 
 span {
@@ -107,12 +120,13 @@ span {
 	padding: 10px 0px;
 }
 
-li.edit span {
+li.edit span, div.edit span {
 	display: none;
 }
 
 input[type="text"].empty {
 	display: initial;
+	border-bottom: 2px solid black;
 }
 
 input[type="text"].filled {

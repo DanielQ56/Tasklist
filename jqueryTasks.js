@@ -1,7 +1,12 @@
 
+/*
+Functions called on startup
+*/
+
 var storage = window.localStorage;
 
 $(function() {
+
 	if(storage.getItem("tasks") !== null)
 	{
 		var taskString, task, completed;
@@ -11,7 +16,6 @@ $(function() {
 		var tc = 0; 
 
 		AddTaskToList(previousList, tc);
-
 	}
 	else
 	{
@@ -28,6 +32,9 @@ $(function() {
 			$(this).removeClass('selected');
 		});
 
+	$('input:text').on("keydown", InputKeyPress);
+	$('input:text').on("input", UpdateInputSize);
+
 	$('li .delete').on('click', function() {
 		$(this).parent().slideUp(300, DeleteTask())
 	});
@@ -42,16 +49,39 @@ $(function() {
 	});
 });
 
+function UpdateInputSize()
+{
+	console.log("space bar");
+	$(this).prev().text(this.value)
+	$(this).css('width', Math.max(100, $(this).prev().width()));
+	$(this).prev().text("")
+}
+
+function InputKeyPress(event)
+{
+	if(event.which === 13)
+	{
+		SaveTextInput.call(this);
+	}
+	else
+	{
+		UpdateInputSize.call(this);
+	}
+}
+
+
 function HideAndClearTasks(rows, index)
 {
+	var newIndex = index;
 	setTimeout(function() {
-		var row = rows[index];
+		var row = rows[newIndex];
 		$(row).slideUp(200, function() {
-			if(index < 5)
+			if(newIndex < 5)
 			{
 				var textinput = row.querySelector("input[type='text']")
 				textinput.value = "";
 				SaveTextInput.call(textinput);
+				UpdateInputSize.call(textinput);
 			}
 			else
 			{
@@ -59,7 +89,7 @@ function HideAndClearTasks(rows, index)
 			}
 		});
 
-		if(index > 0)
+		if(newIndex > 0)
 			HideAndClearTasks(rows, --index);
 		else
 			ShowTasks(rows, index);
