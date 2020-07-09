@@ -117,11 +117,13 @@ function SaveTextInput()
 	{
 		this.classList.add("filled");
 		this.classList.remove("empty");
+		this.previousElementSibling.classList.remove("empty");
 	}
 	else
 	{
 		this.classList.add("empty");
 		this.classList.remove("filled");
+		this.previousElementSibling.classList.add("empty");
 	}
 
 	this.parentNode.classList.remove("edit");

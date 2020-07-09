@@ -61,7 +61,7 @@ function InputKeyPress(event)
 {
 	if(event.which === 13)
 	{
-		SaveTextInput.call(this);
+		this.blur();
 	}
 	else
 	{
@@ -198,6 +198,8 @@ function CreateNewTaskObject()
 	$(newTask).toggle();
 
 	checklist.appendChild(newTask);
+
+	SaveTextInput.call(newInput);
 
 	return newTask;
 }

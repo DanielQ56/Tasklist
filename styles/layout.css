@@ -1,3 +1,13 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	box-sizing: border-box;
+}
+
+
 h1{
 	display: inline;
 	text-align: center;
@@ -17,7 +27,7 @@ h2{
 }
 
 body {
-	background-color: lightblue;
+	background-color: #BFEFFF;
 }
 
 
@@ -34,69 +44,24 @@ li {
 	border: none;
 }
 
-li.selected {
-	background-color: #FFDAB9;
-}
-
-input[type="text"].name{
-	font: bolder 3em Ariel;
-	width: 200px;
-	color: black;
-}
-
-span.name {
-	font: bolder 3em Ariel;
-	color: black;
-}
-
-#time {
-	font-size: 30px;
-}
-
-#fakespan {
-	visibility: hidden;
-	white-space: nowrap;
-	width:auto;
-	display: inline-block;
-	position: fixed;
-	overflow: auto;
-	font: 24px Garamond;
-}
-
-.container {
-	text-align: center;
-	margin: auto;
-	padding: 8px 0px;
-}
 
 input[type="button"] {
-	margin: 3px 10px
-	padding: 10px 50px;
+	margin: 5px 0px 5px 7px;
+	padding: 5px 10px;
 	outline: none;
 	border: 1px solid blue;
 	border-radius: 10px;
 	transition-duration: : 40ms;
+	background-color: transparent;
 }
 
 input[type="button"]:hover {
-	background-color: #D3D3D3;
+	color: white;
 }
-
-input[type="button"].delete, input[type="button"].complete {
-	display: none;
-}
-
-
-
-li.selected input[type="button"].delete, li.selected input[type="button"].complete {
-	display: inline-block;
-	margin: 0px 0px 0px 15px;
-}
-
 
 input[type="text"]{
 	border: 0;
-	background: lightblue;
+	background: transparent;
 	display: inline-block;
 	margin: 3px 5px 3px 0px;
 	border-bottom: 2px solid black;
@@ -108,32 +73,9 @@ input[type="text"]{
 	transition: 0.1s;
 }
 
-
-li.edit input[type="text"], div.edit input[type="text"] {
-	display: initial;
-	border-bottom: 2px solid black;
-}
-
 span {
 	font: 24px Garamond;
 	margin: 6px 0px 6px 0px;
-	padding: 10px 0px;
-}
+	padding: 10px 10px 10px 0px;
 
-li.edit span, div.edit span {
-	display: none;
-}
-
-input[type="text"].empty {
-	display: initial;
-	border-bottom: 2px solid black;
-}
-
-input[type="text"].filled {
-	display: none;
-	border-bottom: none;
-}
-
-li span.completed {
-	text-decoration: line-through;
 }
