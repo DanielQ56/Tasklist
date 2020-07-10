@@ -13,53 +13,71 @@ span.name {
 	color: black;
 }
 
+.main {
+	width: auto;
+	margin: 10px auto;
+	text-align: center;
+	padding: 15px 10px;
+}
+
 /*Body/Buttons*/
 
+ul.selected li {
+	margin: 20px 0px;
+}
+
 li.selected {
-	background-color: #63D1F4;
+	border: 2px solid black;
+	border-radius: 20px;
+	padding: 10px 0px 15px 15px;
 }
 
-li.selected input[type="button"].delete, li.selected input[type="button"].complete {
-	display: inline-block;
-	margin: 3px 0px 3px 10px;
+li.selected input[type="text"], li.selected p {
+	width: 90%;
+	font: 26px Garamond;
 }
 
-input[type="button"].delete, input[type="button"].complete {
+li.selected .container {
+	display: block;
+}
+
+li .container {
 	display: none;
 }
 
 .container {
+	display: inline-block;
 	text-align: center;
 	width: auto;
-	margin: 15px 0px;
-	padding: 0px;
+	margin: 0px auto;
+	margin-top: 10px;
+	padding: 0px 5px;
+	border: none;
 }
 
 /*Text Inputs and Span*/
-
-
 li.edit input[type="text"], div.edit input[type="text"] {
-	display: initial;
+	display: inline-block;
 	border-bottom: 2px solid black;
 }
 
-span.empty, li.edit span, div.edit span {
+li.edit p, p.empty, li.edit span, div.edit span {
 	display: none;
 }
 
 
 input[type="text"].empty {
-	display: initial;
+	display: inline-block;
 	border-bottom: 2px solid black;
 }
 
 input[type="text"].filled {
 	display: none;
-	margin: 0px 10px;
+	margin: 0px 0px;
 	border-bottom: none;
 }
 
-li span.completed {
+li p.completed {
 	text-decoration: line-through;
 }
 
@@ -89,4 +107,12 @@ li span.completed {
 	height: 100%;
 	background: radial-gradient(#B7E9F7, #7AD7F0);
 	z-index: -1;
+}
+
+#content {
+	border-radius: 15px;
+	background: rgba(99, 209, 244,1);
+	margin: 10px 5px;
+	padding: 20px 15px;
+
 }

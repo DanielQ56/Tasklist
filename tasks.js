@@ -15,7 +15,7 @@ var namespan = document.querySelector("span.name");
 nameinput.addEventListener("click", EditItem);
 nameinput.addEventListener("blur", SaveTextInput);
 
-namespan.addEventListener("click", EditItemFromSpan);
+namespan.addEventListener("click", EditItemFromText);
 
 RetrieveStoredName();
 
@@ -83,7 +83,7 @@ function UpdateTime()
 
 function CrossOffTask()
 {
-	var child = this.parentNode.children[0];
+	var child = this.parentNode.parentNode.children[0];
 	if(!child.classList.contains("completed") && child.textContent.length > 0)
 	{
 		child.classList.add("completed");
@@ -102,7 +102,7 @@ function EditItem(event)
 	this.setSelectionRange(0, this.value.length);
 }
 
-function EditItemFromSpan(event)
+function EditItemFromText(event)
 {
 	EditItem.call(this.nextElementSibling);
 }
@@ -135,13 +135,13 @@ function SaveTasklist()
 	var taskArray = [];
 	var taskString = "";
 
-	var spans = [].slice.call(checklist.querySelectorAll("span"));
+	var text = [].slice.call(checklist.querySelectorAll("p"));
 
-	for(var i = spans.length - 1; i >= 0; --i)
+	for(var i = text.length - 1; i >= 0; --i)
 	{
-		if(spans[i].innerText.length == 0)
+		if(text[i].innerText.length == 0)
 			continue;
-		taskString = spans[i].innerText + ":" + (spans[i].classList.contains("completed") ? 1 : 0)
+		taskString = text[i].innerText + ":" + (text[i].classList.contains("completed") ? 1 : 0)
 		taskArray.push(taskString);
 	}
 

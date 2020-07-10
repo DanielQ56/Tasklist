@@ -7,6 +7,17 @@ var storage = window.localStorage;
 
 $(function() {
 
+	$('#checklist').hover(
+		function() {
+			$(this).addClass('selected');
+		},
+		function() {
+			$(this).removeClass('selected');
+	});
+
+	$('input:text').on("keydown", InputKeyPress);
+	$('input:text').on("input", UpdateInputSize);
+
 	if(storage.getItem("tasks") !== null)
 	{
 		var taskString, task, completed;
@@ -21,23 +32,6 @@ $(function() {
 	{
 		console.log("nothing to load");
 	}
-});
-
-$(function() {
-	$('li').hover(
-		function() {
-			$(this).addClass('selected');
-		},
-		function() {
-			$(this).removeClass('selected');
-		});
-
-	$('input:text').on("keydown", InputKeyPress);
-	$('input:text').on("input", UpdateInputSize);
-
-	$('li .delete').on('click', function() {
-		$(this).parent().slideUp(300, DeleteTask())
-	});
 
 	$('#createnewtask').on('click', function() {
 		$(CreateNewTaskObject()).slideDown(300);
@@ -51,7 +45,6 @@ $(function() {
 
 function UpdateInputSize()
 {
-	console.log("space bar");
 	$(this).prev().text(this.value)
 	$(this).css('width', Math.max(100, $(this).prev().width()));
 	$(this).prev().text("")
@@ -62,10 +55,6 @@ function InputKeyPress(event)
 	if(event.which === 13)
 	{
 		this.blur();
-	}
-	else
-	{
-		UpdateInputSize.call(this);
 	}
 }
 
@@ -81,7 +70,6 @@ function HideAndClearTasks(rows, index)
 				var textinput = row.querySelector("input[type='text']")
 				textinput.value = "";
 				SaveTextInput.call(textinput);
-				UpdateInputSize.call(textinput);
 			}
 			else
 			{
@@ -111,7 +99,7 @@ function ShowTasks(rows, index)
 
 function DeleteTask()
 {
-	$(this).parent().slideUp(300, function() {
+	$(this).parent().parent().slideUp(300, function() {
 			$(this).remove();
 		});
 
@@ -140,7 +128,7 @@ function AddTaskToList(previousList, tc)
 
 			$(newTask).slideDown(300);
 		}
-		else if(tc < 5)
+		else if(tc < 4)
 		{
 			var newTask = CreateNewTaskObject.call();
 			$(newTask).slideDown(300);
@@ -162,7 +150,8 @@ function CreateNewTaskObject()
 	newCB.classList.add("complete");
 	newCB.value = "Complete";
 
-	var newSpan = document.createElement("span");
+	var newP = document.createElement("p");
+	newP.classList.add("empty");
 
 	var newInput = document.createElement("input");
 	newInput.classList.add("empty");
@@ -173,18 +162,26 @@ function CreateNewTaskObject()
 	newDelButton.classList.add("delete");
 	newDelButton.value = "Delete";
 
+	var newSubtask = document.createElement("input");
+	newSubtask.setAttribute('type', 'button');
+	newSubtask.value = "Add Subtask";
+
+	var newCont = document.createElement("div");
+	newCont.classList.add("container");
+
 	newCB.addEventListener("click", CrossOffTask);
-	newSpan.addEventListener("click", EditItemFromSpan);
+	newP.addEventListener("click", EditItemFromText);
 	newInput.addEventListener("click", EditItem);
 	newInput.addEventListener("blur", SaveTextInput);
 	newInput.addEventListener("keydown", InputKeyPress);
-	newInput.addEventListener("input", UpdateInputSize);
 
+	newCont.appendChild(newSubtask);
+	newCont.appendChild(newCB);
+	newCont.appendChild(newDelButton);
 
-	newTask.appendChild(newSpan);
+	newTask.appendChild(newP);
 	newTask.appendChild(newInput);
-	newTask.appendChild(newCB);
-	newTask.appendChild(newDelButton);
+	newTask.appendChild(newCont);
 	$(newTask).hover(
 		function() {
 			$(this).addClass('selected');
