@@ -23,13 +23,12 @@ span.name {
 /*Body/Buttons*/
 
 ul.selected li {
-	margin: 20px 0px;
+	margin: 0px 0px 20px 0px;
 }
 
 li.selected {
 	border: 2px solid black;
 	border-radius: 20px;
-	padding: 10px 0px 15px 15px;
 }
 
 li.selected input[type="text"], li.selected p {

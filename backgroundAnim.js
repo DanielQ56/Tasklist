@@ -4,6 +4,10 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+var max = 50;
+var min = 5;
+var particleDivisor = 9000;
+
 let particlesArray;
 
 let mouse = {
@@ -30,7 +34,7 @@ class Particle {
 	draw() {
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-		ctx.fillStyle = '#7694CB';
+		ctx.fillStyle = this.color;
 		ctx.fill();
 	}
 
@@ -50,15 +54,17 @@ class Particle {
 
 function init() {
 	particlesArray = [];
-	let numberOfParticles = (canvas.height * canvas.width) / 9000;
+	let numberOfParticles = (canvas.height * canvas.width) / 11000;
 	for (var i = 0; i < numberOfParticles; ++i)
 	{
-		var size = (Math.random() * 20) + 1;
+		var size = (Math.random() * (max - min)) + min;
 		var x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
 		var y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
 		directionX = (Math.random() * 3) - 1.5;
 		directionY = (Math.random() * 3) - 1.5;
-		color = '#8C5523';
+		var color = '#'+Math.floor(Math.random()*16777215).toString(16);
+
+		console.log(color);
 
 		particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
 	}
