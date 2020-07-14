@@ -32,14 +32,16 @@ body {
 
 
 ul {
-	height: 80%;
+	max-height: 325px;
+	max-width: 500px;
 	text-align: left;
 	list-style-position: inside;
+	overflow-y: auto;
 }
 
 
 li {
-	margin: 10px 0px;
+	margin: 15px 0px;
 	padding: 5px 0px 10px 15px;
 	border-radius: 20px;
 	border: none;
@@ -61,7 +63,7 @@ input[type="button"] {
 input[type="button"]:hover {
 	color: white;
 	font-size: 18px;
-	margin: 5px 5px 5px 15px;
+	margin: 0px 5px 0px 15px;
 }
 
 input[type="text"]{
@@ -72,9 +74,10 @@ input[type="text"]{
 	border-bottom: 2px solid black;
 	padding: 0px 5px;
 	width: 85%;
+	height: auto;
 	outline: none;
 	color: black;
-	font: 24px Garamond;
+	font: 27px Garamond;
 	transition: width 200ms, font 200ms;
 	word-wrap: normal;
 }
@@ -83,7 +86,7 @@ input[type="text"]{
 p {
 	display: inline-block;
 	vertical-align: top;
-	font: 24px Garamond;
+	font: 27px Garamond;
 	margin: 0px 0px;
 	padding: 0px 5px;
 	word-wrap: break-word;

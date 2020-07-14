@@ -3,6 +3,7 @@
 Functions called on startup
 */
 
+
 var storage = window.localStorage;
 
 $(function() {
@@ -35,6 +36,7 @@ $(function() {
 
 	$('#createnewtask').on('click', function() {
 		$(CreateNewTaskObject()).slideDown(300);
+
 	});
 
 	$('#clearall').on('click', function() {
@@ -55,6 +57,7 @@ function InputKeyPress(event)
 	if(event.which === 13)
 	{
 		this.blur();
+
 	}
 }
 
@@ -65,16 +68,7 @@ function HideAndClearTasks(rows, index)
 	setTimeout(function() {
 		var row = rows[newIndex];
 		$(row).slideUp(200, function() {
-			if(newIndex < 5)
-			{
-				var textinput = row.querySelector("input[type='text']")
-				textinput.value = "";
-				SaveTextInput.call(textinput);
-			}
-			else
-			{
-				$(this).remove();
-			}
+			$(this).remove();
 		});
 
 		if(newIndex > 0)
@@ -87,10 +81,9 @@ function HideAndClearTasks(rows, index)
 function ShowTasks(rows, index)
 {
 	setTimeout(function() {
-		var row = rows[index];
-		$(row).slideDown(200);
-		if(index < rows.length)
+		if(index < 4)
 		{
+			$(CreateNewTaskObject()).slideDown(300);
 			ShowTasks(rows, ++index);
 		}
 	}, 100);
@@ -169,6 +162,40 @@ function CreateNewTaskObject()
 	var newCont = document.createElement("div");
 	newCont.classList.add("container");
 
+	newTask.addEventListener("click", function() {
+		if(!this.classList.contains("clicked"))
+		{
+			this.classList.add("clicked");
+			this.classList.add("selected");
+		}
+	});
+
+	newSubtask.addEventListener("click", function() {
+
+		var newUL;
+
+		if(this.parentNode.parentNode.querySelector(".subtasklist") === null)
+		{
+			newUL = document.createElement("ul");
+			newUL.classList.add("subtasklist");
+			this.parentNode.parentNode.insertBefore(newUL, this.parentNode);
+		}
+		else
+		{
+			newUL = this.parentNode.parentNode.querySelector(".subtasklist");
+		}
+
+		var newSB = CreateNewSubtask();
+
+		newUL.appendChild(newSB);
+
+		$(newSB).toggle();
+		$(newSB).slideDown(300);
+
+	});
+
+
+
 	newCB.addEventListener("click", CrossOffTask);
 	newP.addEventListener("click", EditItemFromText);
 	newInput.addEventListener("click", EditItem);
@@ -184,10 +211,12 @@ function CreateNewTaskObject()
 	newTask.appendChild(newCont);
 	$(newTask).hover(
 		function() {
-			$(this).addClass('selected');
+			if($(".clicked").length === 0)
+				$(this).addClass('selected');
 		},
 		function() {
-			$(this).removeClass('selected');
+			if(!$(this).hasClass("clicked"))
+				$(this).removeClass('selected');
 		});
 		
 	$(newDelButton).on('click', DeleteTask);
@@ -195,6 +224,66 @@ function CreateNewTaskObject()
 	$(newTask).toggle();
 
 	checklist.appendChild(newTask);
+
+	SaveTextInput.call(newInput);
+
+	return newTask;
+}
+
+
+function CreateNewSubtask()
+{
+	var newTask = document.createElement("li");
+	newTask.classList.add("row");
+	newTask.classList.add("subtask");
+
+	var newCB = document.createElement("input");
+	newCB.setAttribute('type', 'button');
+	newCB.classList.add("complete");
+	newCB.value = "Complete";
+
+	var newP = document.createElement("p");
+	newP.classList.add("empty");
+
+	var newInput = document.createElement("input");
+	newInput.classList.add("empty");
+	newInput.setAttribute('type', 'text');
+
+	var newDelButton = document.createElement("input");
+	newDelButton.setAttribute('type', 'button');
+	newDelButton.classList.add("delete");
+	newDelButton.value = "Delete";
+
+
+	var newCont = document.createElement("div");
+	newCont.classList.add("container");
+
+
+	newCB.addEventListener("click", CrossOffTask);
+	newP.addEventListener("click", EditItemFromText);
+	newInput.addEventListener("click", EditItem);
+	newInput.addEventListener("blur", SaveTextInput);
+	newInput.addEventListener("keydown", InputKeyPress);
+
+	newCont.appendChild(newCB);
+	newCont.appendChild(newDelButton);
+
+	newTask.appendChild(newP);
+	newTask.appendChild(newInput);
+	newTask.appendChild(newCont);
+	$(newTask).hover(
+		function() {
+			$(this).addClass('selected');
+		},
+		function() {
+			$(this).removeClass('selected');
+		});
+
+	$(newTask).on("click", function() {
+
+	})
+		
+	$(newDelButton).on('click', DeleteTask);
 
 	SaveTextInput.call(newInput);
 

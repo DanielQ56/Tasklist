@@ -22,9 +22,6 @@ span.name {
 
 /*Body/Buttons*/
 
-ul.selected li {
-	margin: 0px 0px 20px 0px;
-}
 
 li.selected {
 	border: 2px solid black;
@@ -33,11 +30,12 @@ li.selected {
 
 li.selected input[type="text"], li.selected p {
 	width: 90%;
-	font: 26px Garamond;
+	font: 30px Garamond;
 }
 
-li.selected .container {
+li.selected>.container {
 	display: block;
+	text-align: right;
 }
 
 li .container {
@@ -50,9 +48,24 @@ li .container {
 	width: auto;
 	margin: 0px auto;
 	margin-top: 10px;
-	padding: 0px 5px;
+	padding: 0px 10px;
 	border: none;
 }
+
+/*Subtasks*/
+
+ul.subtasklist {
+	display:none;
+}
+
+li.selected ul.subtasklist {
+	display: initial;
+}
+
+li.subtask {
+
+}
+
 
 /*Text Inputs and Span*/
 li.edit input[type="text"], div.edit input[type="text"] {
@@ -102,8 +115,6 @@ li p.completed {
 	box-sizing: border-box;
 	top:0;
 	left: 0;
-	width: 100%;
-	height: 100%;
 	background: radial-gradient(#B7E9F7, #7AD7F0);
 	z-index: -1;
 }

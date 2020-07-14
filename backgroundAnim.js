@@ -4,6 +4,47 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+var body = document.querySelector("body");
+
+var anim;
+
+var isStatic = false;
+var AnimatedBackground = true;
+
+document.getElementById("static").addEventListener("click", 
+	function() {
+		if(AnimatedBackground)
+		{
+			if(isStatic)
+			{
+				animate();
+				isStatic = false;
+				this.value = "Static";
+			}
+			else
+			{
+				cancelAnimationFrame(anim);
+				isStatic = true;
+				this.value = "Animate";
+			}
+		}
+		else
+		{
+			init();
+			isStatic = false;
+			this.value = "Static";
+			AnimatedBackground = true;
+			animate();
+		}
+	});
+
+document.getElementById("switch").addEventListener("click",
+	function() {
+		StaticInit();
+		AnimatedBackground = false;
+		cancelAnimationFrame(anim);
+	})
+
 var max = 50;
 var min = 5;
 var particleDivisor = 9000;
@@ -54,7 +95,7 @@ class Particle {
 
 function init() {
 	particlesArray = [];
-	let numberOfParticles = (canvas.height * canvas.width) / 11000;
+	let numberOfParticles = (canvas.height * canvas.width) / particleDivisor;
 	for (var i = 0; i < numberOfParticles; ++i)
 	{
 		var size = (Math.random() * (max - min)) + min;
@@ -64,20 +105,49 @@ function init() {
 		directionY = (Math.random() * 3) - 1.5;
 		var color = '#'+Math.floor(Math.random()*16777215).toString(16);
 
-		console.log(color);
-
 		particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
 	}
 }
 
 function animate() {
-	requestAnimationFrame(animate);
+	anim = requestAnimationFrame(animate);
 	ctx.clearRect(0, 0, innerWidth, innerHeight);
 	for(var i = 0; i < particlesArray.length; ++i)
 	{
 		particlesArray[i].update();
 	}
 }
+
+
+function StaticInit() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	particlesArray = [];
+	numberOfParticles = (canvas.height * canvas.width) / (particleDivisor/2);
+	for(var i = 0; i < numberOfParticles; ++i)
+	{
+		var size = (Math.random() * (max * 2 - (max))) + (max);
+		var x = (Math.random() * innerWidth);
+		var y = (Math.random() * innerHeight);
+
+		var color = '#'+Math.floor(Math.random()*16777215).toString(16);
+
+		particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+	}
+	for(var i = 0; i < particlesArray.length; ++i)
+	{
+		particlesArray[i].update();
+	}
+}
+
+function ResizeWindow() 
+{
+	canvas.height = window.innerHeight;
+	canvas.width = window.innerWidth;
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+
+window.addEventListener('resize', ResizeWindow);
 
 init();
 animate();

@@ -19,6 +19,7 @@ namespan.addEventListener("click", EditItemFromText);
 
 RetrieveStoredName();
 
+document.addEventListener('click', DeselectTask);
 
 window.addEventListener("beforeunload", SaveTasklist);
 
@@ -37,6 +38,18 @@ setInterval(UpdateTime, 500)
 
 //Below are all functions
 
+function DeselectTask(event)
+{
+	var tasks = checklist.children;
+	for(var i = 0; i < tasks.length; ++i)
+	{
+		if(!tasks[i].contains(event.target) && tasks[i].classList.contains("clicked"))
+		{
+			tasks[i].classList.remove("clicked");
+			tasks[i].classList.remove("selected");
+		}
+	}
+}
 
 function RetrieveStoredName()
 {
