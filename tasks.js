@@ -96,7 +96,7 @@ function UpdateTime()
 
 function CrossOffTask()
 {
-	var child = this.parentNode.parentNode.children[0];
+	var child = this.parentNode.children[0];
 	if(!child.classList.contains("completed") && child.textContent.length > 0)
 	{
 		child.classList.add("completed");
@@ -148,14 +148,34 @@ function SaveTasklist()
 	var taskArray = [];
 	var taskString = "";
 
-	var text = [].slice.call(checklist.querySelectorAll("p"));
+	var mainTasks = checklist.children;
+	var subTasks;
 
-	for(var i = text.length - 1; i >= 0; --i)
+	for(var i = mainTasks.length - 1; i >= 0; --i)
 	{
-		if(text[i].innerText.length == 0)
+		if(mainTasks[i].firstChild.innerText.length == 0 && mainTasks[i].querySelector("ul") == null)
 			continue;
-		taskString = text[i].innerText + ":" + (text[i].classList.contains("completed") ? 1 : 0)
+
+		taskString = mainTasks[i].firstChild.innerText + ":" + (mainTasks[i].firstChild.classList.contains("completed") ? 1 : 0)
+
+		subTasks = mainTasks[i].querySelector("ul").children;
+
+		if(subTasks.length > 0)
+		{
+			taskString += ":";
+			for(var j = subTasks.length - 1; j >= 0; --j)
+			{
+				if(subTasks[j].firstChild.innerText.length === 0)
+					continue;
+
+				taskString += (subTasks[j].firstChild.innerText + "-" + (subTasks[j].firstChild.classList.contains("completed") ? 1 : 0) + ",");
+			}
+		}
+
+
 		taskArray.push(taskString);
+
+
 	}
 
 	storage.setItem("name", nameinput.value.trim());

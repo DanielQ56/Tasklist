@@ -107,6 +107,7 @@ function AddTaskToList(previousList, tc)
 			var newTask = CreateNewTaskObject.call();
 
 			taskString = previousList[previousList.length - 1 - tc].split(":");
+
 			task = taskString[0];
 			completed = taskString[1];
 
@@ -116,7 +117,36 @@ function AddTaskToList(previousList, tc)
 
 			if(parseInt(completed, 10) === 1)
 			{
-				CrossOffTask.call(text.nextElementSibling);
+				CrossOffTask.call(text);
+			}
+
+			if(taskString.length > 2)
+			{
+				console.log("subtasks");
+				var sublist = CreateNewSublist.call(newTask);
+
+				var subtasks = taskString[2].split(",");
+				console.log(subtasks);
+				for(var i = subtasks.length - 1; i >= 0; --i)
+				{
+					if(subtasks[i].length === 0)
+						continue;
+
+					var sb = subtasks[i].split("-");
+
+					var newSubtask = CreateNewSubtask.call();
+
+					var subtext = newSubtask.querySelector("input[type='text']");
+					subtext.value = sb[0];
+					SaveTextInput.call(subtext);
+
+					if(parseInt(sb[1], 10) === 1)
+					{
+						CrossOffTask.call(subtext);
+					}
+
+					sublist.appendChild(newSubtask);			
+				}
 			}
 
 			$(newTask).slideDown(300);
@@ -171,32 +201,17 @@ function CreateNewTaskObject()
 	});
 
 	newSubtask.addEventListener("click", function() {
-
-		var newUL;
-
-		if(this.parentNode.parentNode.querySelector(".subtasklist") === null)
-		{
-			newUL = document.createElement("ul");
-			newUL.classList.add("subtasklist");
-			this.parentNode.parentNode.insertBefore(newUL, this.parentNode);
-		}
-		else
-		{
-			newUL = this.parentNode.parentNode.querySelector(".subtasklist");
-		}
-
 		var newSB = CreateNewSubtask();
-
-		newUL.appendChild(newSB);
-
+		CreateNewSublist.call(this.parentNode.parentNode).appendChild(newSB);
 		$(newSB).toggle();
 		$(newSB).slideDown(300);
-
 	});
 
 
 
-	newCB.addEventListener("click", CrossOffTask);
+	newCB.addEventListener("click", function() {
+		CrossOffTask.call(this.parentNode);
+	});
 	newP.addEventListener("click", EditItemFromText);
 	newInput.addEventListener("click", EditItem);
 	newInput.addEventListener("blur", SaveTextInput);
@@ -259,7 +274,9 @@ function CreateNewSubtask()
 	newCont.classList.add("container");
 
 
-	newCB.addEventListener("click", CrossOffTask);
+	newCB.addEventListener("click", function() {
+		CrossOffTask.call(this.parentNode);
+	});
 	newP.addEventListener("click", EditItemFromText);
 	newInput.addEventListener("click", EditItem);
 	newInput.addEventListener("blur", SaveTextInput);
@@ -288,4 +305,24 @@ function CreateNewSubtask()
 	SaveTextInput.call(newInput);
 
 	return newTask;
+}
+
+function CreateNewSublist()
+{
+	var newUL;
+
+	if(this.querySelector(".subtasklist") === null)
+	{
+		newUL = document.createElement("ul");
+		newUL.classList.add("subtasklist");
+		this.insertBefore(newUL, this.children[this.children.length - 1]);
+	}
+	else
+	{
+		newUL = this.querySelector(".subtasklist");
+	}
+
+
+	return newUL;
+
 }
