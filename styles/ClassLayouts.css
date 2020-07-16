@@ -3,21 +3,15 @@ Title/Header
 */
 
 input[type="text"].name{
-	font: bolder 3em Ariel;
-	width: 200px;
+	font: bolder 45px Ariel;
+	width: 110px;
+	max-width: 110px;
 	color: black;
 }
 
-span.name {
-	font: bolder 3em Ariel;
-	color: black;
-}
-
-.main {
+p.name {
+	font: bolder 45px Ariel;
 	width: auto;
-	margin: 10px auto;
-	text-align: center;
-	padding: 15px 10px;
 }
 
 /*Body/Buttons*/
@@ -46,6 +40,7 @@ li .container {
 	display: inline-block;
 	text-align: center;
 	width: auto;
+	max-width: 500px;
 	margin: 0px auto;
 	margin-top: 10px;
 	padding: 0px 10px;
@@ -62,9 +57,6 @@ li.selected ul.subtasklist {
 	display: initial;
 }
 
-li.subtask {
-
-}
 
 
 /*Text Inputs and Span*/
@@ -73,7 +65,7 @@ li.edit input[type="text"], div.edit input[type="text"] {
 	border-bottom: 2px solid black;
 }
 
-li.edit p, p.empty, li.edit span, div.edit span {
+li.edit p, div.edit p, p.empty{
 	display: none;
 }
 
@@ -120,9 +112,22 @@ li p.completed {
 }
 
 #content {
+	border: 1.5px black solid;
 	border-radius: 15px;
 	background: rgba(99, 209, 244,1);
 	margin: 10px 5px;
 	padding: 20px 15px;
 
+}
+
+#main {
+	width: auto;
+	margin: 10px auto;
+	text-align: center;
+	padding: 15px 10px;
+}
+
+#main.dark * {
+	color: white;
+	border-color: white;
 }

@@ -10,7 +10,7 @@ var time = document.getElementById("time");
 var fs = document.getElementById("fakespan");
 
 var nameinput = document.querySelector("input[type='text'].name");
-var namespan = document.querySelector("span.name");
+var namespan = document.querySelector("p.name");
 
 nameinput.addEventListener("click", EditItem);
 nameinput.addEventListener("blur", SaveTextInput);
@@ -122,9 +122,15 @@ function EditItemFromText(event)
 
 function SaveTextInput()
 {
-	this.value = this.value.trim();
+	var v = this.value.trim();
 
-	this.previousElementSibling.innerText = this.value;
+	if(this == nameinput && v.length > 0)
+	{
+		v = v.replace(/!/g, '');
+		v += "!";
+	}
+
+	this.previousElementSibling.innerText = v;
 
 	if(this.value.length > 0)
 	{
@@ -177,6 +183,7 @@ function SaveTasklist()
 
 
 	}
+	storage.setItem("currentBg", currBg);
 
 	storage.setItem("name", nameinput.value.trim());
 
