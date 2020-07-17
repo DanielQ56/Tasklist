@@ -94,7 +94,7 @@ class Firework extends Particle {
 	}
 
 	SparkOutwards() {
-		var numSparks = Math.random() * 20 + 30;
+		var numSparks = Math.random() * 40 + 10;
 
 		this.sparks = [];
 

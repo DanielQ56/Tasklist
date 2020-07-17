@@ -164,10 +164,11 @@ function SaveTasklist()
 
 		taskString = mainTasks[i].firstChild.innerText + ":" + (mainTasks[i].firstChild.classList.contains("completed") ? 1 : 0)
 
-		subTasks = mainTasks[i].querySelector("ul").children;
+		subTasks = mainTasks[i].querySelector("ul");
 
-		if(subTasks.length > 0)
+		if(subTasks && subTasks.children.length > 0)
 		{
+			subTasks = subTasks.children;
 			taskString += ":";
 			for(var j = subTasks.length - 1; j >= 0; --j)
 			{

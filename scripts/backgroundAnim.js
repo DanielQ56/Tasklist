@@ -164,7 +164,7 @@ function FireworksInit()
 	content.style.background = "rgba(96, 96, 96, 0.9)";
 	main.classList.add("dark");
 
-	FireOffFireworks(0,numberOfParticles / 3);
+	FireOffFireworks(0,numberOfParticles / 5);
 	animate();
 }
 
