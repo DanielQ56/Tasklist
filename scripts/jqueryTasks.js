@@ -5,15 +5,12 @@ Functions called on startup
 
 
 var storage = window.localStorage;
+var clicked = false;
 
 $(function() {
 
-	$('#checklist').hover(
-		function() {
-			$(this).addClass('selected');
-		},
-		function() {
-			$(this).removeClass('selected');
+	$('#checklist').mouseleave(function(event) {
+		DeselectHover(event.target);
 	});
 
 	$('input:text').on("keydown", InputKeyPress);
@@ -122,11 +119,9 @@ function AddTaskToList(previousList, tc)
 
 			if(taskString.length > 2)
 			{
-				console.log("subtasks");
 				var sublist = CreateNewSublist.call(newTask);
 
 				var subtasks = taskString[2].split(",");
-				console.log(subtasks);
 				for(var i = subtasks.length - 1; i >= 0; --i)
 				{
 					if(subtasks[i].length === 0)
@@ -195,8 +190,17 @@ function CreateNewTaskObject()
 	newTask.addEventListener("click", function() {
 		if(!this.classList.contains("clicked"))
 		{
+			clicked = true;
 			this.classList.add("clicked");
 			this.classList.add("selected");
+		}
+	});
+
+	newTask.addEventListener("mouseenter", function(event) {
+		if(!clicked)
+		{
+			DeselectHover(event.target);
+			$(this).addClass('selected');
 		}
 	});
 
@@ -224,15 +228,7 @@ function CreateNewTaskObject()
 	newTask.appendChild(newP);
 	newTask.appendChild(newInput);
 	newTask.appendChild(newCont);
-	$(newTask).hover(
-		function() {
-			if($(".clicked").length === 0)
-				$(this).addClass('selected');
-		},
-		function() {
-			if(!$(this).hasClass("clicked"))
-				$(this).removeClass('selected');
-		});
+
 		
 	$(newDelButton).on('click', DeleteTask);
 
@@ -288,18 +284,10 @@ function CreateNewSubtask()
 	newTask.appendChild(newP);
 	newTask.appendChild(newInput);
 	newTask.appendChild(newCont);
-	$(newTask).hover(
-		function() {
+	newTask.addEventListener("mouseenter", function(event) {
+			DeselectHover(event.target);
 			$(this).addClass('selected');
-		},
-		function() {
-			$(this).removeClass('selected');
-		});
-
-	$(newTask).on("click", function() {
-
-	})
-		
+	});
 	$(newDelButton).on('click', DeleteTask);
 
 	SaveTextInput.call(newInput);
@@ -315,6 +303,9 @@ function CreateNewSublist()
 	{
 		newUL = document.createElement("ul");
 		newUL.classList.add("subtasklist");
+		newUL.addEventListener("mouseleave", function(event) {
+			DeselectHover(event.target);
+		});
 		this.insertBefore(newUL, this.children[this.children.length - 1]);
 	}
 	else

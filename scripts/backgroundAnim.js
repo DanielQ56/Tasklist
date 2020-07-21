@@ -69,7 +69,7 @@ document.getElementById("switch").addEventListener("click",
 		static.value = "Static";
 
 		currBg = (++currBg) % AllParticleFunctions.length;
-		console.log(currBg);
+		storage.setItem("currentBg", currBg);
 		AllParticleFunctions[currBg]();
 	})
 

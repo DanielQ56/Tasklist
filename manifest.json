@@ -4,9 +4,6 @@
 	"version": "1.0",
 	"description": "Organize your tasks for the day!",
 	"permissions": ["tabs"],
-	"chrome_url_overrides": {
-		"newtab": "tasklist.html"
-	},
 	"icons": {
 		"32": "icons/bullet-points32.png"
 	},
@@ -14,7 +11,8 @@
 		"default_icon": "icons/bullet-points32.png"
 	},
 	"background": {
-		"scripts": ["scripts/chromeBackground.js"]
+		"scripts": ["scripts/chromeBackground.js"],
+		"persistant": false
 	}
 
 

@@ -19,9 +19,8 @@ namespan.addEventListener("click", EditItemFromText);
 
 RetrieveStoredName();
 
-document.addEventListener('click', DeselectTask);
+document.addEventListener('click', DeselectClick);
 
-window.addEventListener("beforeunload", SaveTasklist);
 
 var today = new Date();
 
@@ -37,18 +36,51 @@ setInterval(UpdateTime, 500)
 
 
 //Below are all functions
-
-function DeselectTask(event)
+function DeselectClick(event)
 {
-	var tasks = checklist.children;
-	for(var i = 0; i < tasks.length; ++i)
+	if(clicked)
 	{
-		if(!tasks[i].contains(event.target) && tasks[i].classList.contains("clicked"))
+		var tasks = checklist.children;
+		for(var i = 0; i < tasks.length; ++i)
 		{
-			tasks[i].classList.remove("clicked");
-			tasks[i].classList.remove("selected");
+			if(!tasks[i].contains(event.target) && tasks[i].classList.contains("clicked"))
+			{
+				tasks[i].classList.remove("clicked");
+				tasks[i].classList.remove("selected");
+			}
+		}
+		if(checklist.querySelector(".clicked") == null)
+			clicked = false;
+	}
+}
+
+function DeselectHover(target)
+{
+	var tasks = target.closest("ul");
+
+	if(tasks === null)
+		tasks = checklist;
+
+
+	if(tasks.querySelector(".clicked") == null)
+	{
+		tasks = tasks.children;
+		for(var i = 0; i < tasks.length; ++i)
+		{
+			if(tasks[i].classList.contains("selected"))
+			{
+				tasks[i].classList.remove("selected");
+			}
+			
 		}
 	}
+}
+
+
+function cancelBubble(e) {
+ var evt = e ? e:window.event;
+ if (evt.stopPropagation)    evt.stopPropagation();
+ if (evt.cancelBubble!=null) evt.cancelBubble = true;
 }
 
 function RetrieveStoredName()
@@ -76,7 +108,7 @@ function UpdateTime()
 		midday = "PM";
 		hours = hours === 12 ? hours : hours % 12;
 
-		if(hours > 5)
+		if(hours > 5 && hours < 12)
 			header.innerText = "Good Evening ";
 		else
 			header.innerText = "Good Afternoon ";
@@ -128,6 +160,9 @@ function SaveTextInput()
 	{
 		v = v.replace(/!/g, '');
 		v += "!";
+
+
+		storage.setItem("name", nameinput.value.trim());
 	}
 
 	this.previousElementSibling.innerText = v;
@@ -146,11 +181,15 @@ function SaveTextInput()
 	}
 
 	this.parentNode.classList.remove("edit");
+
+	if(this != nameinput)
+		SaveTasklist();
 }
 
 
 function SaveTasklist()
 {
+	console.log("saving");
 	var taskArray = [];
 	var taskString = "";
 
@@ -184,9 +223,6 @@ function SaveTasklist()
 
 
 	}
-	storage.setItem("currentBg", currBg);
-
-	storage.setItem("name", nameinput.value.trim());
 
 	storage.setItem("tasks", JSON.stringify(taskArray));
 
